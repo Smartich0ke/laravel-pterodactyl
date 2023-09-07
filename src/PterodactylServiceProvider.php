@@ -11,6 +11,7 @@ class PterodactylServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/pterodactyl.php' => config_path('pterodactyl.php'),
         ], 'config');
+        Pterodactyl::init();
 
     }
 
