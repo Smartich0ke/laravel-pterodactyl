@@ -39,4 +39,14 @@ class User
         $this->updated_at = $data['updated_at'];
     }
 
+    public function create() {
+        $response = Pterodactyl::post('/users', [
+            'username' => $this->username,
+            'email' => $this->email,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+        ]);
+        $this->fromApiData($response['attributes']);
+    }
+
 }
