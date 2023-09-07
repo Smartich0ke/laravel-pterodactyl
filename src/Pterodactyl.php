@@ -71,4 +71,14 @@ class Pterodactyl
 
     }
 
+    public static function post($endpoint, $data) {
+        $url = self::$api_url.'/api/application'.$endpoint;
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.self::$api_key,
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ])->post($url, $data);
+        return $response->json();
+    }
+
 }
