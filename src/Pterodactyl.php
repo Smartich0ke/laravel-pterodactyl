@@ -47,6 +47,19 @@ class Pterodactyl
         return $user;
     }
 
+    /**
+     * Get a user by their external ID.
+     *
+     * @param int $id
+     * @return User
+     */
+    public static function userByExternalId(int $id): User {
+        $data = self::get('/users/external/'.$id);
+        $user = new User();
+        $user->fromApiData($data['attributes']);
+        return $user;
+    }
+
     public static function get($endpoint) {
         $url = self::$api_url.'/api/application'.$endpoint;
         $response = Http::withHeaders([
