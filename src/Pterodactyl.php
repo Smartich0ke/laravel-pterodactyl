@@ -15,7 +15,13 @@ class Pterodactyl
         self::$api_url = config('pterodactyl.api_url');
     }
 
-    public static function users() {
+
+    /**
+     * Get all users belonging to the application.
+     *
+     * @return Collection
+     */
+    public static function users(): Collection {
         $data = self::get('/users');
         $users = [];
         foreach ($data['data'] as $userData) {
@@ -26,6 +32,19 @@ class Pterodactyl
 
         return new Collection($users);
 
+    }
+
+    /**
+     * Get a user by their ID.
+     *
+     * @param int $id
+     * @return User
+     */
+    public static function user(int $id): User {
+        $data = self::get('/users/'.$id);
+        $user = new User();
+        $user->fromApiData($data['attributes']);
+        return $user;
     }
 
     public static function get($endpoint) {
