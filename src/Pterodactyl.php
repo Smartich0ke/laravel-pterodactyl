@@ -60,6 +60,25 @@ class Pterodactyl
         return $user;
     }
 
+    public static function nodes(): Collection {
+        $data = self::get('/nodes');
+        $nodes = [];
+        foreach ($data['data'] as $nodeData) {
+            $node = new Node();
+            $node->fromApiData($nodeData['attributes']);
+            $nodes[] = $node;
+        }
+
+        return new Collection($nodes);
+    }
+
+    public static function node(int $id): Node {
+        $data = self::get('/nodes/'.$id);
+        $node = new Node();
+        $node->fromApiData($data['attributes']);
+        return $node;
+    }
+
     public static function get($endpoint) {
         $url = self::$api_url.'/api/application'.$endpoint;
         $response = Http::withHeaders([
