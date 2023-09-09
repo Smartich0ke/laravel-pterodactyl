@@ -17,6 +17,7 @@ class User
     public $multi_factor_auth;
     public $created_at;
     public $updated_at;
+    private $password;
 
     public function __construct()
     {
@@ -47,6 +48,22 @@ class User
             'last_name' => $this->last_name,
         ]);
         $this->fromApiData($response['attributes']);
+    }
+    
+    public function update() {
+        $response = Pterodactyl::patch('/users/'.$this->id, [
+            'username' => $this->username,
+            'email' => $this->email,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'language' => $this->language,
+            'password' => $this->password,
+        ]);
+        $this->fromApiData($response['attributes']);
+    }
+
+    public function delete() {
+        $response = Pterodactyl::delete('/users/'.$this->id);
     }
 
 }
