@@ -55,5 +55,9 @@ class Node
         $this->updated_at = $data['updated_at'];
     }
 
+    public function configuration() {
+        $response = Pterodactyl::get('/nodes/'.$this->id.'/configuration');
+        return $response;
+    }
 
 }
