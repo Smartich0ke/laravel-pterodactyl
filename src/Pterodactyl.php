@@ -81,4 +81,25 @@ class Pterodactyl
         return $response->json();
     }
 
+    public static function patch($endpoint, $data) {
+        $url = self::$api_url.'/api/application'.$endpoint;
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.self::$api_key,
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ])->patch($url, $data);
+        return $response->json();
+    }
+
+    public static function delete($endpoint) {
+        $url = self::$api_url.'/api/application'.$endpoint;
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.self::$api_key,
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ])->delete($url);
+        return $response->json();
+    }
+    
+
 }
