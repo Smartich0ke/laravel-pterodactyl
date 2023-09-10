@@ -67,6 +67,10 @@ class Node
         return $response;
     }
 
+    public function allocations() {
+        return Pterodactyl::allocations($this);
+    }
+
     public function create() {
         $response = Pterodactyl::post('/nodes', [
             'name' => $this->name,

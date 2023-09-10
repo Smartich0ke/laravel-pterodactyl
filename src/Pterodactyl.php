@@ -79,6 +79,19 @@ class Pterodactyl
         return $node;
     }
 
+    public static function allocations(Node $node): Collection {
+        $nodeId = $node->id;
+        $data = self::get('/nodes/'.$nodeId.'/allocations');
+        $allocations = [];
+        foreach ($data['data'] as $allocationData) {
+            $allocation = new Allocation($node);
+            $allocation->fromApiData($allocationData['attributes']);
+            $allocations[] = $allocation;
+        }
+
+        return new Collection($allocations);
+    }
+
     public static function get($endpoint) {
         $url = self::$api_url.'/api/application'.$endpoint;
         $response = Http::withHeaders([
