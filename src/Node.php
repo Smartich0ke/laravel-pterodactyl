@@ -2,6 +2,8 @@
 
 namespace Artichoke\Pterodactyl;
 
+use Illuminate\Support\Facades\Log;
+
 class Node
 {
 
@@ -29,6 +31,11 @@ class Node
     public function __construct()
     {
         //
+    }
+
+    protected function throwError($response) {
+        Log::error('Pterodactyl API Error: ', $response['errors']);
+        throw new PterodactylApiException('API returned an error:', $response['errors']);
     }
 
     public function fromApiData(array $data)
@@ -59,5 +66,48 @@ class Node
         $response = Pterodactyl::get('/nodes/'.$this->id.'/configuration');
         return $response;
     }
+
+    public function create() {
+        $response = Pterodactyl::post('/nodes', [
+            'name' => $this->name,
+            'description' => $this->description,
+            'location_id' => $this->location_id,
+            'fqdn' => $this->fqdn,
+            'scheme' => $this->scheme,
+            'memory' => $this->memory,
+            'memory_overallocate' => $this->memory_overallocate,
+            'disk' => $this->disk,
+            'disk_overallocate' => $this->disk_overallocate,
+            'upload_size' => $this->upload_size,
+            'daemon_listen' => $this->daemon_listen,
+            'daemon_sftp' => $this->daemon_sftp,
+        ]);
+        $this->fromApiData($response['attributes']);
+    }
+
+    public function update() {
+        $response = Pterodactyl::patch('/nodes/'.$this->id, [
+            'name' => $this->name,
+            'description' => $this->description,
+            'location_id' => $this->location_id,
+            'fqdn' => $this->fqdn,
+            'scheme' => $this->scheme,
+            'memory' => $this->memory,
+            'memory_overallocate' => $this->memory_overallocate,
+            'disk' => $this->disk,
+            'disk_overallocate' => $this->disk_overallocate,
+            'upload_size' => $this->upload_size,
+            'daemon_listen' => $this->daemon_listen,
+            'daemon_sftp' => $this->daemon_sftp,
+        ]);
+        $this->fromApiData($response['attributes']);
+    }
+
+    public function delete() {
+        $response = Pterodactyl::delete('/nodes/'.$this->id);
+        return $response;
+    }
+
+
 
 }
