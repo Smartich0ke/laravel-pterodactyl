@@ -79,6 +79,24 @@ class Pterodactyl
         return $node;
     }
 
+    public static function locations(): Collection {
+        $data = self::get('/locations');
+        $locations = [];
+        foreach ($data['data'] as $locationData) {
+            $location = new Location();
+            $location->fromApiData($locationData['attributes']);
+            $locations[] = $location;
+        }
+        return new Collection($locations);
+    }
+
+    public static function location(int $id): Location {
+        $data = self::get('/locations/'.$id);
+        $location = new Location();
+        $location->fromApiData($data['attributes']);
+        return $location;
+    }
+
     public static function allocations(Node $node): Collection {
         $nodeId = $node->id;
         $data = self::get('/nodes/'.$nodeId.'/allocations');
