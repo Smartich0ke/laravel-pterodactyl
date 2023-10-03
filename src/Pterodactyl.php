@@ -87,6 +87,25 @@ class Pterodactyl
         return $node;
     }
 
+    public static function nests(): Collection {
+        $data = Api::get('/nests');
+        $nests = [];
+        foreach ($data['data'] as $nestData) {
+            $nest = new Nest();
+            $nest->fromApiData($nestData['attributes']);
+            $nests[] = $nest;
+        }
+
+        return new Collection($nests);
+    }
+
+    public static function nest(int $id): Nest {
+        $data = Api::get('/nests/' . $id);
+        $nest = new Nest();
+        $nest->fromApiData($data['attributes']);
+        return $nest;
+    }
+
     public static function locations(): Collection {
         $data = Api::get('/locations');
         $locations = [];
