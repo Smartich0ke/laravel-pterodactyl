@@ -63,7 +63,7 @@ class Node
     }
 
     public function configuration() {
-        $response = Pterodactyl::get('/nodes/'.$this->id.'/configuration');
+        $response = Api::get('/nodes/' . $this->id . '/configuration');
         return $response;
     }
 
@@ -72,7 +72,7 @@ class Node
     }
 
     public function create() {
-        $response = Pterodactyl::post('/nodes', [
+        $response = Api::post('/nodes', [
             'name' => $this->name,
             'description' => $this->description,
             'location_id' => $this->location_id,
@@ -90,7 +90,7 @@ class Node
     }
 
     public function update() {
-        $response = Pterodactyl::patch('/nodes/'.$this->id, [
+        $response = Api::patch('/nodes/' . $this->id, [
             'name' => $this->name,
             'description' => $this->description,
             'location_id' => $this->location_id,
@@ -108,7 +108,7 @@ class Node
     }
 
     public function delete() {
-        $response = Pterodactyl::delete('/nodes/'.$this->id);
+        $response = Api::delete('/nodes/' . $this->id);
         return $response;
     }
 

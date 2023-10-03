@@ -41,7 +41,7 @@ class User
     }
 
     public function create() {
-        $response = Pterodactyl::post('/users', [
+        $response = Api::post('/users', [
             'username' => $this->username,
             'email' => $this->email,
             'first_name' => $this->first_name,
@@ -51,7 +51,7 @@ class User
     }
     
     public function update() {
-        $response = Pterodactyl::patch('/users/'.$this->id, [
+        $response = Api::patch('/users/' . $this->id, [
             'username' => $this->username,
             'email' => $this->email,
             'first_name' => $this->first_name,
@@ -63,7 +63,7 @@ class User
     }
 
     public function delete() {
-        $response = Pterodactyl::delete('/users/'.$this->id);
+        $response = Api::delete('/users/' . $this->id);
     }
 
 }

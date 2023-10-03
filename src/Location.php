@@ -30,14 +30,14 @@ class Location
     }
 
     public function create() {
-        $response = Pterodactyl::post('/locations', [
+        $response = Api::post('/locations', [
             'short' => $this->short,
             'long' => $this->long,
         ]);
     }
 
     public function update() {
-        $response = Pterodactyl::patch('/locations/'.$this->id, [
+        $response = Api::patch('/locations/' . $this->id, [
             'short' => $this->short,
             'long' => $this->long,
         ]);
@@ -45,7 +45,7 @@ class Location
     }
 
     public function delete() {
-        $response = Pterodactyl::delete('/locations/'.$this->id);
+        $response = Api::delete('/locations/' . $this->id);
         return $response;
     }
 }
